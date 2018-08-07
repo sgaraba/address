@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Address
+Comment=Fast and friendly Address Book
+GenericName=Fast and friendly Address Book
+Exec=/usr/bin/address
+Terminal=false
+Type=Application
+Icon=address
+Categories=Application;Programming;
+StartupWMClass=Address
+StartupNotify=true

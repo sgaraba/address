@@ -2,10 +2,10 @@
 
 	<property name="bin" value="ant-bin"/>
 	<property name="dist" value="dist"/>
-	<property name="resources" value="src/main/resources"/>
+	<property name="resources" value="resources"/>
 	<property name="name" value="Address"/>
 	<property name="version" value="1.0"/>
-	<property name="main.class" value="ch.makery.ch.makery.ch.makery.address.Launcher"/>
+	<property name="main.class" value="ch.makery.address.Launcher"/>
 
 
 	<property name="win.installer.dir" value="${basedir}/ext/win-installer"/>
@@ -203,7 +203,7 @@
             </copy>
 
             <copy file="${dist}/${ant.project.name}-@{platform}-${version}.jar" todir="${dist}/deb/usr/lib/address"/>
-            <copy file="src/main/resources/images/icon128.png" tofile="${dist}/deb/usr/share/pixmaps/address.png"/>
+            <copy file="resources/images/icon128.png" tofile="${dist}/deb/usr/share/pixmaps/address.png"/>
 
             <replace file="${dist}/deb/DEBIAN/control">
                 <replacefilter token="VERSION" value="${version}"/>
@@ -243,7 +243,7 @@
                 <replacefilter token="FILENAME_OUT" value="${ant.project.name}-@{platform}-${version}.exe"/>
                 <replacefilter token="VERSION" value="${version}"/>
             </replace>
-            <launch4j configFile="${dist}/ch.makery.ch.makery.address.xml"/>
+            <launch4j configFile="${dist}/address.xml"/>
             <delete file="${dist}/address.xml"/>
             <delete file="${dist}/${ant.project.name}-@{platform}-${version}.jar"/>
         </sequential>

@@ -3,13 +3,13 @@
 <plist version="1.0">
     <dict>
         <key>CFBundleExecutable</key>
-        <string>ipscan</string>
+        <string>address</string>
         <key>CFBundleGetInfoString</key>
         <string>APPNAME VERSION - fast and friendly network scanner</string>
         <key>CFBundleIconFile</key>
-        <string>ipscan.icns</string>
+        <string>address.icns</string>
         <key>CFBundleIdentifier</key>
-        <string>net.azib.ipscan</string>
+        <string>ch.makery.address</string>
         <key>CFBundleInfoDictionaryVersion</key>
         <string>6.0</string>
         <key>CFBundleName</key>

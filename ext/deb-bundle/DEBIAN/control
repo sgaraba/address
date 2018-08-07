@@ -1,14 +1,10 @@
-Package: ipscan
+Package: address
 Section: net
 Version: VERSION-1
 Priority: optional
 Architecture: ARCH
 Installed-Size: 1710
 Depends: openjdk-9-jre | oracle-java9-installer | openjdk-8-jre | oracle-java8-installer | openjdk-7-jre | oracle-java7-installer
-Maintainer: Anton Keks <anton@azib.net>
-Description: Angry IP Scanner - fast and friendly IP Scanner
- Angry IP Scanner is a cross-platform network scanner written in Java.
- It can scan IP-based networks in any range, scan ports, and resolve
- other information.
- The program provides an easy to use GUI interface and is very extensible,
- see http://angryip.org/ for more information.
+Maintainer: Esempla Systems <admin@esempla.com>
+Description: Fast and friendly Address Book
+ Address Book is a cross-platform application written in Java.

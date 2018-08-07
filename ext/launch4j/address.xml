@@ -9,8 +9,8 @@
   <supportUrl>http://www.angryip.org/</supportUrl>
   <customProcName>true</customProcName>
   <stayAlive>false</stayAlive>
-  <manifest>../ext/launch4j/ipscan.manifest</manifest>
-  <icon>../src/main/resources/images/icon.ico</icon>
+  <manifest>../ext/launch4j/address.manifest</manifest>
+  <icon>../resources/images/icon.ico</icon>
   <jre>
     <minVersion>1.7.0</minVersion>
   </jre>
@@ -23,6 +23,6 @@
     <txtProductVersion>VERSION</txtProductVersion>
     <productName>Address</productName>
     <internalName>address</internalName>
-    <originalFilename>ch.makery.ch.makery.address.exe</originalFilename>
+    <originalFilename>address.exe</originalFilename>
   </versionInfo>
 </launch4jConfig>
