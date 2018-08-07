@@ -5,7 +5,7 @@
 	<property name="resources" value="src/main/resources"/>
 	<property name="name" value="Address"/>
 	<property name="version" value="1.0"/>
-	<property name="main.class" value="ch.makery.address.Launcher"/>
+	<property name="main.class" value="ch.makery.ch.makery.ch.makery.address.Launcher"/>
 
 
 	<property name="win.installer.dir" value="${basedir}/ext/win-installer"/>
@@ -243,7 +243,7 @@
                 <replacefilter token="FILENAME_OUT" value="${ant.project.name}-@{platform}-${version}.exe"/>
                 <replacefilter token="VERSION" value="${version}"/>
             </replace>
-            <launch4j configFile="${dist}/address.xml"/>
+            <launch4j configFile="${dist}/ch.makery.ch.makery.address.xml"/>
             <delete file="${dist}/address.xml"/>
             <delete file="${dist}/${ant.project.name}-@{platform}-${version}.jar"/>
         </sequential>
