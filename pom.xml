@@ -59,20 +59,17 @@
                                     <fileset dir="${basedir}/target/" includes="${project.build.finalName}.*"/>
                                 </copy>
 
-                                <!--linux 64 deb package-->
+                                <!--linux64 deb package-->
                                 <mkdir dir="${basedir}/dist/deb"/>
                                 <copy todir="${basedir}/dist/deb">
                                     <fileset dir="src/main/ext/deb-bundle"/>
                                 </copy>
-
                                 <copy file="${basedir}/dist/${project.name}-${project.version}.jar" todir="${basedir}/dist/deb/usr/lib/address"/>
                                 <copy file="src/main/resources/images/icon128.png" tofile="${basedir}/dist/deb/usr/share/pixmaps/address.png"/>
-
                                 <replace file="${basedir}/dist/deb/DEBIAN/control">
                                     <replacefilter token="VERSION" value="${project.version}"/>
                                     <replacefilter token="ARCH" value="amd64"/>
                                 </replace>
-
                                 <exec executable="chmod" dir="${basedir}/dist/">
                                     <arg line="a+x deb/usr/bin/address deb/usr/lib/address/${project.build.finalName}.jar"/>
                                 </exec>
@@ -82,7 +79,23 @@
                                 </exec>
                                 <delete dir="${basedir}/dist/deb"/>
 
-                                <!--windows exe-->
+                                <!--linux64 rpm package-->
+                                <mkdir dir="${basedir}/dist/rpm"/>
+                                <copy todir="${basedir}/dist/rpm">
+                                    <fileset dir="src/main/ext/rpmbuild"/>
+                                </copy>
+                                <replace file="${basedir}/dist/rpm/SPECS/address.spec">
+                                    <replacefilter token="VERSION" value="${project.version}"/>
+                                </replace>
+
+                                <exec executable="rpmbuild" dir="${basedir}/dist/rpm">
+                                    <arg line="--target x86_64 --define &quot;_topdir ${basedir}/dist/rpm&quot; -bb SPECS/address.spec"/>
+                                </exec>
+                                <move file="${basedir}/dist/rpm/RPMS/x86_64/address-${project.version}-1.x86_64.rpm" todir="${basedir}/dist"/>
+
+                                <delete dir="${basedir}/dist/rpm"/>
+
+                                <!--win64 exe-->
                                 <copy file="src/main/ext/launch4j/address.xml" todir="${basedir}/dist"/>
                                 <replace file="${basedir}/dist/address.xml">
                                     <replacefilter token="FILENAME_IN" value="${project.name}-${project.version}.jar"/>
@@ -91,6 +104,22 @@
                                 </replace>
                                 <launch4j configFile="${basedir}/dist/address.xml"/>
                                 <delete file="${basedir}/dist/address.xml"/>
+
+                                <!--Mac-->
+                                <copy todir="${basedir}/dist">
+                                    <fileset dir="src/main/ext/mac-bundle"/>
+                                </copy>
+                                <copy file="${basedir}/dist/${project.name}-${project.version}.jar" todir="${basedir}/dist/Address.app/Contents/MacOS"/>
+                                <replace file="${basedir}/dist/Address.app/Contents/Info.plist">
+                                    <replacefilter token="APPNAME" value="${project.name}"/>
+                                    <replacefilter token="VERSION" value="${project.version}"/>
+                                </replace>
+                                <zip destfile="${basedir}/dist/${project.name}-mac-${version}.zip">
+                                    <zipfileset dir="${basedir}/dist/Address.app" excludes="Contents/MacOS/address" prefix="Address.app"/>
+                                    <!-- this one should be executable -->
+                                    <zipfileset dir="${basedir}/dist/Address.app" includes="Contents/MacOS/address" prefix="Address.app" filemode="755"/>
+                                </zip>
+                                <delete dir="${basedir}/dist/Address.app"/>
 
                                 <delete file="${basedir}/dist/${project.name}-${project.version}.jar"/>
                             </target>
