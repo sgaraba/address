@@ -6,16 +6,15 @@
 
     <groupId>ch.makery.address</groupId>
     <artifactId>address</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
-
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
-        <finalName>address</finalName>
+        <finalName>address-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -29,6 +28,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -38,13 +38,65 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.zenjava</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.8.3</version>
-                <configuration>
-                    <vendor>Esempla</vendor>
-                    <mainClass>ch.makery.address.Launcher</mainClass>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>packages</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask"
+                                         classpath="src/main/ext/launch4j/launch4j.jar:src/main/ext/launch4j/xstream.jar"/>
+
+                                <delete dir="${basedir}/dist"/>
+                                <mkdir dir="${basedir}/dist" />
+                                <copy todir="${basedir}/dist" overwrite="true" verbose="true" failonerror="true">
+                                    <fileset dir="${basedir}/target/" includes="${project.build.finalName}.*"/>
+                                </copy>
+
+                                <!--linux 64 deb package-->
+                                <mkdir dir="${basedir}/dist/deb"/>
+                                <copy todir="${basedir}/dist/deb">
+                                    <fileset dir="src/main/ext/deb-bundle"/>
+                                </copy>
+
+                                <copy file="${basedir}/dist/${project.name}-${project.version}.jar" todir="${basedir}/dist/deb/usr/lib/address"/>
+                                <copy file="src/main/resources/images/icon128.png" tofile="${basedir}/dist/deb/usr/share/pixmaps/address.png"/>
+
+                                <replace file="${basedir}/dist/deb/DEBIAN/control">
+                                    <replacefilter token="VERSION" value="${project.version}"/>
+                                    <replacefilter token="ARCH" value="amd64"/>
+                                </replace>
+
+                                <exec executable="chmod" dir="${basedir}/dist/">
+                                    <arg line="a+x deb/usr/bin/address deb/usr/lib/address/${project.build.finalName}.jar"/>
+                                </exec>
+                                <echo message="Building .deb package using dpkg..."/>
+                                <exec executable="fakeroot" dir="${basedir}/dist/">
+                                    <arg line="dpkg-deb -b deb ${project.name}-${project.version}-amd64.deb"/>
+                                </exec>
+                                <delete dir="${basedir}/dist/deb"/>
+
+                                <!--windows exe-->
+                                <copy file="src/main/ext/launch4j/address.xml" todir="${basedir}/dist"/>
+                                <replace file="${basedir}/dist/address.xml">
+                                    <replacefilter token="FILENAME_IN" value="${project.name}-${project.version}.jar"/>
+                                    <replacefilter token="FILENAME_OUT" value="${project.name}-${project.version}.exe"/>
+                                    <replacefilter token="VERSION" value="${project.version}"/>
+                                </replace>
+                                <launch4j configFile="${basedir}/dist/address.xml"/>
+                                <delete file="${basedir}/dist/address.xml"/>
+
+                                <delete file="${basedir}/dist/${project.name}-${project.version}.jar"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
