@@ -23,8 +23,8 @@ see http://esempla.com/ for more information.
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_libdir}/address $RPM_BUILD_ROOT/%{_datadir}/applications $RPM_BUILD_ROOT/%{_datadir}/pixmaps $RPM_BUILD_ROOT/%{_bindir}
-cp ../../%{name}-%{version}.jar $RPM_BUILD_ROOT/%{_libdir}/address/
-cp ../../../src/main/ext/deb-bundle/usr/share/applications/address.desktop $RPM_BUILD_ROOT/%{_datadir}/applications/
+cp ../../../target/%{name}-%{version}.jar $RPM_BUILD_ROOT/%{_libdir}/address/
+cp ../../../src/main/resources/ext/deb-bundle/usr/share/applications/address.desktop $RPM_BUILD_ROOT/%{_datadir}/applications/
 cp ../../../src/main/resources/images/icon128.png $RPM_BUILD_ROOT/%{_datadir}/pixmaps/address.png
 echo "#/bin/sh" > $RPM_BUILD_ROOT/%{_bindir}/address
 echo "java -jar %{_libdir}/address/address*.jar" >> $RPM_BUILD_ROOT/%{_bindir}/address
